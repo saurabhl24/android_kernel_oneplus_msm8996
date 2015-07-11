@@ -33,6 +33,8 @@
 #include "mdss_debug.h"
 #include "mdss_dsi_phy.h"
 #include "mdss_dba_utils.h"
+#include "mdss_livedisplay.h"
+
 
 #define XO_CLK_RATE	19200000
 #define CMDLINE_DSI_CTL_NUM_STRING_LEN 2
@@ -2672,40 +2674,8 @@ static int mdss_dsi_event_handler(struct mdss_panel_data *pdata,
 					&ctrl_pdata->dba_work, HZ);
 		}
 		break;
-	case MDSS_EVENT_PANEL_SET_ACL:
-		ctrl_pdata->acl_mode = (int)(unsigned long) arg;
-		mdss_dsi_panel_set_acl(ctrl_pdata,(int)(unsigned long) ctrl_pdata->acl_mode);
-		break;
-	case MDSS_EVENT_PANEL_GET_ACL:
-		rc = ctrl_pdata->acl_mode;
-		break;
-	case MDSS_EVENT_PANEL_SET_MAX_BRIGHTNESS:
-		ctrl_pdata->max_brightness_level= (int)(unsigned long) arg;
-		mdss_dsi_panel_set_max_brightness(ctrl_pdata,(int)(unsigned long) ctrl_pdata->max_brightness_level);
-		break;
-	case MDSS_EVENT_PANEL_GET_MAX_BRIGHTNESS:
-		rc = mdss_dsi_panel_get_max_brightness(ctrl_pdata);
-		break;
-	case MDSS_EVENT_PANEL_SET_SRGB_MODE:
-		ctrl_pdata->SRGB_mode= (int)(unsigned long) arg;
-		mdss_dsi_panel_set_srgb_mode(ctrl_pdata,(int)(unsigned long) ctrl_pdata->SRGB_mode);
-		break;
-	case MDSS_EVENT_PANEL_GET_SRGB_MODE:
-		rc = mdss_dsi_panel_get_srgb_mode(ctrl_pdata);
-		break;
-	case MDSS_EVENT_PANEL_SET_ADOBE_RGB_MODE:
-		ctrl_pdata->Adobe_RGB_mode= (int)(unsigned long) arg;
-		mdss_dsi_panel_set_adobe_rgb_mode(ctrl_pdata,(int)(unsigned long) ctrl_pdata->Adobe_RGB_mode);
-		break;
-	case MDSS_EVENT_PANEL_GET_ADOBE_RGB_MODE:
-		rc = mdss_dsi_panel_get_adobe_rgb_mode(ctrl_pdata);
-		break;
-	case MDSS_EVENT_PANEL_SET_DCI_P3_MODE:
-		ctrl_pdata->dci_p3_mode= (int)(unsigned long) arg;
-		mdss_dsi_panel_set_dci_p3_mode(ctrl_pdata,(int)(unsigned long) ctrl_pdata->dci_p3_mode);
-		break;
-	case MDSS_EVENT_PANEL_GET_DCI_P3_MODE:
-		rc = mdss_dsi_panel_get_dci_p3_mode(ctrl_pdata);
+	case MDSS_EVENT_UPDATE_LIVEDISPLAY:
+		rc = mdss_livedisplay_update(ctrl_pdata, (int)(unsigned long) arg);
 		break;
 	default:
 		pr_debug("%s: unhandled event=%d\n", __func__, event);
