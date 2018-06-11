@@ -176,4 +176,4 @@ obj-$(CONFIG_SENSORS_SSC)	+= sensors/
 obj-$(CONFIG_MOBICORE_DRIVER)	+= gud/
 
 obj-$(CONFIG_NFC)		+= nfc/
-
+obj-$(CONFIG_DTS_EAGLE)		+= dts_eagle/
